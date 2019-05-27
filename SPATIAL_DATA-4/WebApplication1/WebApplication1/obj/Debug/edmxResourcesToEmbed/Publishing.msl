@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Хранилище publishingModelContainer" CdmEntityContainer="publishingEntities">
+    <EntitySetMapping Name="Authors">
+      <EntityTypeMapping TypeName="publishingModel.Author">
+        <MappingFragment StoreEntitySet="Authors">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="nickname" ColumnName="nickname" />
+          <ScalarProperty Name="mobile_phone" ColumnName="mobile_phone" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Books">
+      <EntityTypeMapping TypeName="publishingModel.Book">
+        <MappingFragment StoreEntitySet="Books">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="caption" ColumnName="caption" />
+          <ScalarProperty Name="publication_year" ColumnName="publication_year" />
+          <ScalarProperty Name="author_id" ColumnName="author_id" />
+          <ScalarProperty Name="cost" ColumnName="cost" />
+          <ScalarProperty Name="publishing_id" ColumnName="publishing_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Publishings">
+      <EntityTypeMapping TypeName="publishingModel.Publishing">
+        <MappingFragment StoreEntitySet="Publishings">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="pname" ColumnName="pname" />
+          <ScalarProperty Name="city" ColumnName="city" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SoldBooks">
+      <EntityTypeMapping TypeName="publishingModel.SoldBook">
+        <MappingFragment StoreEntitySet="SoldBooks">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="book_id" ColumnName="book_id" />
+          <ScalarProperty Name="nbook" ColumnName="nbook" />
+          <ScalarProperty Name="order_data" ColumnName="order_data" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="world_cities">
+      <EntityTypeMapping TypeName="publishingModel.world_cities">
+        <MappingFragment StoreEntitySet="world_cities">
+          <ScalarProperty Name="ogr_fid" ColumnName="ogr_fid" />
+          <ScalarProperty Name="ogr_geometry" ColumnName="ogr_geometry" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="country" ColumnName="country" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

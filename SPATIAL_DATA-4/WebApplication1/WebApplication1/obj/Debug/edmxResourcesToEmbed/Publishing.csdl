@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="publishingModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Author">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nickname" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="mobile_phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Books" Relationship="Self.FK__Books__author_id__40058253" FromRole="Authors" ToRole="Books" />
+  </EntityType>
+  <EntityType Name="Book">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="caption" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="publication_year" Type="Int32" />
+    <Property Name="author_id" Type="Int32" />
+    <Property Name="cost" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="publishing_id" Type="Int32" />
+    <NavigationProperty Name="Author" Relationship="Self.FK__Books__author_id__40058253" FromRole="Books" ToRole="Authors" />
+    <NavigationProperty Name="Publishing" Relationship="Self.FK__Books__publishin__40F9A68C" FromRole="Books" ToRole="Publishings" />
+    <NavigationProperty Name="SoldBooks" Relationship="Self.FK__SoldBooks__book___43D61337" FromRole="Books" ToRole="SoldBooks" />
+  </EntityType>
+  <EntityType Name="Publishing">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" />
+    <Property Name="pname" Type="String" MaxLength="35" FixedLength="false" Unicode="true" />
+    <Property Name="city" Type="Int32" />
+    <NavigationProperty Name="Books" Relationship="Self.FK__Books__publishin__40F9A68C" FromRole="Publishings" ToRole="Books" />
+    <NavigationProperty Name="world_cities" Relationship="Self.FK__Publishing__city__3C34F16F" FromRole="Publishings" ToRole="world_cities" />
+  </EntityType>
+  <EntityType Name="SoldBook">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="book_id" Type="Int32" />
+    <Property Name="nbook" Type="Int32" />
+    <Property Name="order_data" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="Book" Relationship="Self.FK__SoldBooks__book___43D61337" FromRole="SoldBooks" ToRole="Books" />
+  </EntityType>
+  <EntityType Name="world_cities">
+    <Key>
+      <PropertyRef Name="ogr_fid" />
+    </Key>
+    <Property Name="ogr_fid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ogr_geometry" Type="Geometry" />
+    <Property Name="name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+    <Property Name="country" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Publishings" Relationship="Self.FK__Publishing__city__3C34F16F" FromRole="world_cities" ToRole="Publishings" />
+  </EntityType>
+  <Association Name="FK__Books__author_id__40058253">
+    <End Role="Authors" Type="Self.Author" Multiplicity="0..1" />
+    <End Role="Books" Type="Self.Book" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Authors">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Books">
+        <PropertyRef Name="author_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Books__publishin__40F9A68C">
+    <End Role="Publishings" Type="Self.Publishing" Multiplicity="0..1" />
+    <End Role="Books" Type="Self.Book" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Publishings">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Books">
+        <PropertyRef Name="publishing_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__SoldBooks__book___43D61337">
+    <End Role="Books" Type="Self.Book" Multiplicity="0..1" />
+    <End Role="SoldBooks" Type="Self.SoldBook" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Books">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="SoldBooks">
+        <PropertyRef Name="book_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Publishing__city__3C34F16F">
+    <End Role="world_cities" Type="Self.world_cities" Multiplicity="0..1" />
+    <End Role="Publishings" Type="Self.Publishing" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="world_cities">
+        <PropertyRef Name="ogr_fid" />
+      </Principal>
+      <Dependent Role="Publishings">
+        <PropertyRef Name="city" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="publishingEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Authors" EntityType="Self.Author" />
+    <EntitySet Name="Books" EntityType="Self.Book" />
+    <EntitySet Name="Publishings" EntityType="Self.Publishing" />
+    <EntitySet Name="SoldBooks" EntityType="Self.SoldBook" />
+    <EntitySet Name="world_cities" EntityType="Self.world_cities" />
+    <AssociationSet Name="FK__Books__author_id__40058253" Association="Self.FK__Books__author_id__40058253">
+      <End Role="Authors" EntitySet="Authors" />
+      <End Role="Books" EntitySet="Books" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Books__publishin__40F9A68C" Association="Self.FK__Books__publishin__40F9A68C">
+      <End Role="Publishings" EntitySet="Publishings" />
+      <End Role="Books" EntitySet="Books" />
+    </AssociationSet>
+    <AssociationSet Name="FK__SoldBooks__book___43D61337" Association="Self.FK__SoldBooks__book___43D61337">
+      <End Role="Books" EntitySet="Books" />
+      <End Role="SoldBooks" EntitySet="SoldBooks" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Publishing__city__3C34F16F" Association="Self.FK__Publishing__city__3C34F16F">
+      <End Role="world_cities" EntitySet="world_cities" />
+      <End Role="Publishings" EntitySet="Publishings" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

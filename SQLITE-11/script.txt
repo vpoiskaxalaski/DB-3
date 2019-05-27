@@ -1,0 +1,77 @@
+sqlite3
+
+publishing.db
+
+create table Authors(
+id integer primary key AUTOINCREMENT,
+nickname text unique,
+mobile_phone text
+);
+
+create table Books(
+id integer primary key AUTOINCREMENT,
+caption text,
+publication_year integer,
+author_id integer,
+cost money,
+FOREIGN KEY (author_id) REFERENCES Authors(id)
+);
+
+create table SoldBooks
+(
+id integer primary key AUTOINCREMENT,
+book_id integer,
+nbook int check(nbook>0),
+order_data date,
+FOREIGN KEY (book_id) REFERENCES Books(id)
+);
+
+insert into Authors(nickname, mobile_phone) values 
+('Mikhail Bulgakov', '375332587856'), 
+('Erich Maria Remarque',   '375294457856'),
+('Oscar Wilde',     '375252545856'),
+('Agatha Christie',   '375332599876');
+
+
+insert into Books(caption, publication_year, author_id, cost) values
+('Die Traumbude', 1920, 2, 56.8),
+('The White Guard', 1926, 1, 57.4),
+('Dorian Gray', 1980, 3, 41.3),
+('Der Funke Leben', 1952, 2, 45.6),
+('The Pale Horse', 1961, 4, 78.6),
+('The Master and Margarita', 1967, 1, 35.7),
+('Heart of a Dog', 1968, 1, 45.1);
+
+insert into SoldBooks(book_id,nbook,order_data) values
+(5, 63, '02-05-2018'),
+(6, 25, '02-05-2019'),
+(7, 54, '02-05-2017'),
+(3, 890,'02-05-2018'),
+(2, 34, '02-05-2018'),
+(1, 78, '02-05-2017'),
+(4, 15,'02-05-2019');
+
+select * from Authors;
+select * from Books;
+select * from SoldBooks;
+
+
+
+
+
+select * from BooksAndAuthors;
+
+create trigger if not exists check_SoldBooks
+after insert on SoldBooks 
+for each row
+begin
+	insert into SoldBooks(book_id,nbook,order_data)
+	values
+	(1, 1, '13-09-2017');
+end;
+
+insert into SoldBooks(book_id,nbook,order_data)
+values
+(2, 13, '13-09-2017');
+
+
